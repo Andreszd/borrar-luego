@@ -1,17 +1,15 @@
 import { Navigate, Route, Outlet, useLocation } from 'react-router-dom';
-import {useContext} from 'react'
-import {AuthContext} from '../store/user'
-// haz la prueba xd
+import { useContext } from 'react';
+import { AuthContext } from '../store/user';
 
-export const PrivateDocRoutes = () => {
-    const {isAuthenticated, isAdmin} = useContext(AuthContext)
-  
-    let location = useLocation();
-    return isAuthenticated && !isAdmin ? <Outlet/> : <Navigate to="/login" state={{ from: location }} replace />;  
-}
+export const PrivateRoutes = ({ children, roles = [] }) => {
+  const { isAuthenticated, user } = useContext(AuthContext);
+  let location = useLocation();
 
-export const PrivateAdmRoutes = () => {
-    const {isAuthenticated, isAdmin} = useContext(AuthContext)
-    let location = useLocation();
-    return isAuthenticated && isAdmin ? <Outlet/> : <Navigate to="/login" state={{ from: location }} replace />;  
-}
+  if (!user || !isAuthenticated)
+    return <Navigate to='/auth' state={{ from: location }} replace />;
+
+  const userRol = user.esAdmin === 'yes' ? 'admin' : 'teacher';
+  console.log(roles, userRol);
+  return roles.includes(userRol) ? children : <Navigate to='/auth' />;
+};
