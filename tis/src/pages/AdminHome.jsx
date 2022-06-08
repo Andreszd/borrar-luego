@@ -1,9 +1,8 @@
-import HeaderAdm from '../Componentes/Header_Adm/headerAdm'
-import { Outlet, useNavigate, useLocation, Navigate } from "react-router-dom";
-import { useEffect} from 'react'
-import Inicio from '../Componentes/Inicio';
+import HeaderAdm from '../Componentes/Header_Adm/headerAdm';
+import { Outlet } from 'react-router-dom';
 import Pie_de_pagina from '../Componentes/Pie_de_pagina/pieDePagina';
 
+<<<<<<< HEAD
 export default function AdminHome(){
     
     let navigate = useNavigate();
@@ -26,3 +25,15 @@ export default function AdminHome(){
        </>
     )    
 }
+=======
+export default function AdminHome() {
+  return (
+    <>
+      <HeaderAdm />
+      <Outlet />
+      <Pie_de_pagina />
+    </>
+  );
+}
+
+>>>>>>> refactor/routes-protection

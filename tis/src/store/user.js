@@ -1,11 +1,14 @@
-import {createContext, useState, useEffect} from 'react'
-import {auth} from '../services/auth'
-import {get} from '../services/user'
+import { createContext, useState, useEffect } from 'react';
+import { auth } from '../services/auth';
+import { get } from '../services/user';
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+<<<<<<< HEAD
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isAdmin, setIsAdmin] = useState(null)
@@ -48,18 +51,31 @@ export const AuthProvider = ({children}) => {
 
         return res
         
+=======
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    const userId = window.localStorage.getItem('userId');
+    if (!token && !userId) {
+      setIsAuthenticated(false);
+    } else {
+      setIsAuthenticated(true);
+      get(userId)
+        .then(setUser)
+        .catch((err) => console.error(err));
+>>>>>>> refactor/routes-protection
     }
+  }, []);
 
-    const signUp = () => {
-        setIsAuthenticated(false)
-    }
+  const authenticate = (user) => {
+    const { id, fullName, email, esAdmin } = user;
+    setUser({ id, fullName, email, esAdmin });
+    setIsAuthenticated(true);
 
-    const logout = () => {
-        window.localStorage.removeItem('token')
-        window.localStorage.removeItem('userId')
-        setIsAuthenticated(false)
-    }
+    window.localStorage.setItem('userId', id);
+    window.localStorage.setItem('token', user.access_token);
+  };
 
+<<<<<<< HEAD
     const vars = {isAuthenticated, isAdmin, signIn, signUp, logout, user}
     return (
         <AuthContext.Provider value={vars}>
@@ -67,3 +83,37 @@ export const AuthProvider = ({children}) => {
         </AuthContext.Provider>
     )
 }
+=======
+  const signIn = async (body) => {
+    //fakeLogin();
+    try {
+      const res = await auth(body);
+      if (res.status !== 1) throw new Error(res?.message);
+      authenticate(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const signUp = () => {
+    setIsAuthenticated(false);
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userId');
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
+  const vars = {
+    isAuthenticated,
+    user,
+    signIn,
+    signUp,
+    logout,
+    user,
+  };
+  return <AuthContext.Provider value={vars}>{children}</AuthContext.Provider>;
+};
+>>>>>>> refactor/routes-protection
