@@ -5,21 +5,15 @@ export const useAulas = () => {
   const [aulas, setAulas] = useState([]);
   const [aula, setAula] = useState(null);
 
-<<<<<<< HEAD
-    useEffect(() => {
-        getAll().then(data => {
-            if (data.length){
-                setAulas(data)
-            }else{
-                setAulas(["vacio"])
-            }
-        })
-    }, [])
-=======
   useEffect(() => {
-    getAll().then(setAulas);
+    getAll().then((data) => {
+      if (data.length) {
+        setAulas(data);
+      } else {
+        setAulas(['vacio']);
+      }
+    });
   }, []);
->>>>>>> refactor/routes-protection
 
   const updateAula = (id, body) => {
     const newAulas = aulas.map((aula) => (aula.id === id ? body : aula));
@@ -40,4 +34,3 @@ export const useAulas = () => {
 
   return { aulas, updateAula, removeAula, focusAula, aula };
 };
-

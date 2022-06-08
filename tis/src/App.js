@@ -61,8 +61,6 @@ function App() {
               <Route path='crud-usarios' element={<Crud_Usuarios />} />
             </Route>
             <Route path='/auth' element={<Auth />} />
-            <Route path='/register' element={<Login />} />
-            <Route path='/login' element={<Login />} />
             <Route path='/recuperar' element={<Rec_Cont />} />
             <Route path='/cambiar-cont/:email' element={<CambiarCont />} />
           </Routes>

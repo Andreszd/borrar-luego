@@ -23,6 +23,11 @@ function OffCanvasExample({ name, ...props }) {
   const redirectTo = () => {
     navigate(`/mis-reservas`);
   };
+
+  const handleOnClick = () => {
+    navigate('/auth');
+    logout();
+  };
   return (
     <>
       <a
@@ -48,7 +53,7 @@ function OffCanvasExample({ name, ...props }) {
             <p>{perfil.email}</p>
           </div>
           <div className='cont-btn-perfil'>
-            <button onClick={() => logout()}>Cerrar Sesión</button>
+            <button onClick={handleOnClick}>Cerrar Sesión</button>
           </div>
         </Offcanvas.Body>
       </Offcanvas>
